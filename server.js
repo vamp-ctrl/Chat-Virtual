@@ -3,15 +3,11 @@ const app = express();
 const http = require('http').createServer(app);
 const io = require('socket.io')(http);
 
-// Serve arquivos da pasta public
 app.use(express.static('public'));
 
-io.on('connection', socket => {
-  console.log('Novo usuário conectado');
-
-  socket.on('chat message', msg => {
-    io.emit('chat message', msg);
-  });
+io.on('connection', (socket) => {
+  console.log('Um usuário se conectou');
+  // lógica de chat aqui...
 });
 
 const PORT = process.env.PORT || 3000;
