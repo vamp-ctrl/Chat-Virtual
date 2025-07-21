@@ -7,6 +7,21 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- HEADER -->
+  <header id="chat-header">
+    <h1 id="chat-title">FlipperFest Chat</h1>
+  </header>
+
+  <!-- SIDEBAR USUÁRIOS -->
+  <aside id="user-panel" class="hidden">
+    <h2>Usuários Online</h2>
+    <ul id="user-list"></ul>
+    <hr>
+    <label for="username">Seu nome:</label>
+    <input type="text" id="username" placeholder="Digite seu nome" />
+  </aside>
+
+  <!-- CONTAINER DO CHAT -->
   <div class="chat">
     <div id="mensagens" class="mensagens"></div>
     <form id="form">
@@ -14,6 +29,7 @@
       <button>Enviar</button>
     </form>
   </div>
+
   <script src="/socket.io/socket.io.js"></script>
   <script src="script.js"></script>
 </body>

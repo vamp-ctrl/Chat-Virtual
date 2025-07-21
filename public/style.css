@@ -1,9 +1,25 @@
+/* Estilo base */
 body {
   font-family: sans-serif;
   background: #f0f0f0;
+  margin: 0;
+  padding-top: 60px; /* espaço para o header */
   display: flex;
   justify-content: center;
-  padding-top: 50px;
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: #007bff;
+  color: white;
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .chat {
@@ -15,6 +31,52 @@ body {
   box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
+/* Painel lateral de usuários */
+#user-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 250px;
+  height: 100%;
+  background-color: #ffffff;
+  border-left: 1px solid #ccc;
+  box-shadow: -2px 0 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  z-index: 15;
+  transition: transform 0.3s ease;
+  transform: translateX(0);
+}
+
+#user-panel.hidden {
+  transform: translateX(100%);
+}
+
+#user-panel h2 {
+  margin-top: 0;
+}
+
+#user-list {
+  list-style: none;
+  padding: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
+
+#user-list li {
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+}
+
+/* Campo para editar o nome */
+#username {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Área de mensagens */
 .mensagens {
   height: 300px;
   overflow-y: scroll;
@@ -26,14 +88,16 @@ body {
   margin-bottom: 10px;
 }
 
+/* Formulário */
 form {
   display: flex;
 }
 
-input {
+input#input {
   flex: 1;
   padding: 10px;
   border: none;
+  border-top: 1px solid #ccc;
 }
 
 button {

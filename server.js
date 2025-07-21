@@ -5,18 +5,35 @@ const io = require('socket.io')(http);
 
 app.use(express.static('public'));
 
-io.on('connection', (socket) => {
-  console.log('Um usuário se conectou');
+// Objeto para guardar os usuários conectados
+const usuarios = {};
 
-  // Quando receber uma mensagem do cliente
-  socket.on('mensagem', (msg) => {
-    console.log('Mensagem recebida:', msg);
-    // Envia para todos os clientes conectados (broadcast geral)
-    io.emit('mensagem', msg);
+io.on('connection', (socket) => {
+  console.log('Um usuário se conectou:', socket.id);
+
+  // Nome padrão inicial
+  usuarios[socket.id] = 'Usuário';
+
+  // Envia a lista de usuários atualizada para todos
+  io.emit('usuarios online', Object.values(usuarios));
+
+  // Atualiza o nome do usuário
+  socket.on('atualizar nome', (nome) => {
+    usuarios[socket.id] = nome || 'Usuário';
+    io.emit('usuarios online', Object.values(usuarios));
   });
 
+  // Quando receber uma mensagem
+  socket.on('mensagem', (msg) => {
+    const nome = usuarios[socket.id] || 'Usuário';
+    io.emit('mensagem', { nome, texto: msg.texto });
+  });
+
+  // Quando o usuário se desconecta
   socket.on('disconnect', () => {
-    console.log('Usuário desconectado');
+    console.log('Usuário desconectado:', socket.id);
+    delete usuarios[socket.id];
+    io.emit('usuarios online', Object.values(usuarios));
   });
 });
 
