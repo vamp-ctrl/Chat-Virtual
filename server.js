@@ -7,7 +7,17 @@ app.use(express.static('public'));
 
 io.on('connection', (socket) => {
   console.log('Um usuário se conectou');
-  // lógica de chat aqui...
+
+  // Quando receber uma mensagem do cliente
+  socket.on('mensagem', (msg) => {
+    console.log('Mensagem recebida:', msg);
+    // Envia para todos os clientes conectados (broadcast geral)
+    io.emit('mensagem', msg);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('Usuário desconectado');
+  });
 });
 
 const PORT = process.env.PORT || 3000;
